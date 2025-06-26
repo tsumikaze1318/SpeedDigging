@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FallingRock : MonoBehaviour
 {
-    public float DestroyTime = 5f;
+    public float DestroyTime = 3f;
 
     void Start()
     {

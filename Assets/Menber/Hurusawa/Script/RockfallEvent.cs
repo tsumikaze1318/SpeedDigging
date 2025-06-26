@@ -6,22 +6,30 @@ using UnityEngine.SceneManagement;
 public class RockfallEvent : MonoBehaviour
 {
     public GameObject RockPrefab;
-    public Transform rockSpawnPoint;
-    public int RockCount = 3;
-    public float SpawamRangeX = 3f;
+    public Transform playerTransform;
 
-    private int collapseRisk = 0;  //落石の危険度
-    private int pillarProtectionCount = 0; //落石の免除回数
+    public int RockCount = 3;             // 生成する落石数（常に3個）
+    public float SpawnRangeX = 3f;        // 横方向のばらつき範囲
+
+    private int collapseRisk = 0;         // 崩落危険度
+    private int pillarProtectionCount = 0;
     private bool isGameOver = false;
 
     void Start()
     {
-
         collapseRisk = 0;
         pillarProtectionCount = 0;
 
+        // 自動でプレイヤーを取得（オプション）
+        if (playerTransform == null)
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                playerTransform = player.transform;
+            }
+        }
     }
-
 
     public void OnDig(bool isPillarPlaced)
     {
@@ -47,44 +55,45 @@ public class RockfallEvent : MonoBehaviour
         CheckCollapse();
     }
 
-    //落石の判定
     void CheckCollapse()
     {
-
         if (collapseRisk >= 10 && collapseRisk <= 70)
         {
-            int rand = Random.Range(1, 101);
+            int rand = Random.Range(1, 101); // 1〜100
             if (rand <= collapseRisk)
             {
-                SpawnFallingRock(collapseRisk);
+                SpawnFallingRock();
             }
         }
         else if (collapseRisk >= 80)
         {
-            SpawnFallingRock(collapseRisk);
+            SpawnFallingRock(); // 80%以上は常に落石発生
         }
     }
 
-    //落石の生成
-    void SpawnFallingRock(int count)
+    void SpawnFallingRock()
     {
-        if (RockPrefab && rockSpawnPoint)
+        if (RockPrefab && playerTransform)
         {
             for (int i = 0; i < RockCount; i++)
             {
-                Vector3 spawnPos = rockSpawnPoint.position;
-                spawnPos.z += Random.Range(-1f, 1f);
-                Instantiate(RockPrefab, rockSpawnPoint.position, Quaternion.identity);
+                Vector3 spawnPos = playerTransform.position + Vector3.up * 5f;
+                spawnPos.x += Random.Range(-SpawnRangeX, SpawnRangeX); 
+
+                Instantiate(RockPrefab, spawnPos, Quaternion.identity);
             }
+
+            Debug.Log($"プレイヤーの頭上に {RockCount} 個の落石を生成");
         }
     }
 
-    //ゲームオーバーの処理
     public void GameOver()
     {
-        isGameOver = true;
-        SceneManager.LoadScene("Test Scene2");
+        if (!isGameOver)
+        {
+            isGameOver = true;
+            Debug.Log("ゲームオーバー！");
+            SceneManager.LoadScene("Test Scene2");
+        }
     }
-
-
 }

@@ -407,9 +407,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RockPrefab: {fileID: 6480581430821268060, guid: cd943e8e50a2d4349be5e7413fe2cd40, type: 3}
-  rockSpawnPoint: {fileID: 1500443229}
+  playerTransform: {fileID: 1697224127}
   RockCount: 3
-  SpawamRangeX: 3
+  SpawnRangeX: 3
 --- !u!4 &1500443229
 Transform:
   m_ObjectHideFlags: 0
@@ -418,12 +418,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500443227}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 6, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.02, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1697224127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1500443230
 MonoBehaviour:
@@ -566,7 +566,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 50, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1500443229}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
@@ -574,6 +575,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1320729376}
-  - {fileID: 1500443229}
   - {fileID: 1045338429}
   - {fileID: 1697224127}
