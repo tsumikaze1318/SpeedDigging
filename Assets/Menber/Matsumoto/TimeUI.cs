@@ -22,6 +22,8 @@ public class TimeUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.Instance.IsGame) return;
+
         limitTime -= Time.deltaTime;
 
         if (limitTime < 0 )

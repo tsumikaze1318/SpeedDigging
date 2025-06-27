@@ -833,6 +833,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Title",
+            "id": "6d721a38-71ce-4c03-8060-6cc1f2da5d6a",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "d62873bd-2eb7-4dcd-b0d6-4e9778bfa188",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "354012ac-4254-4054-bc0c-e8234804c7b8",
+                    "path": "<Gamepad>/<Button>",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

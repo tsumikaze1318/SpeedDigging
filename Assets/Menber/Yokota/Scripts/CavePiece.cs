@@ -1,5 +1,4 @@
-﻿using UniRx.Triggers;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CavePiece : MonoBehaviour
 {
@@ -7,7 +6,10 @@ public class CavePiece : MonoBehaviour
     [SerializeField]
     private Sprite[] _sprites;
     private CaveCreator _creator;
-    private Collider2D _collider;
+    private Collider2D _myCollider;
+    [SerializeField]
+    private Collider2D _mineableCollider;
+    private RockfallEvent _rockFallEvent;
 
     private float _transformXFromPlayer;
 
@@ -15,7 +17,10 @@ public class CavePiece : MonoBehaviour
     {
         _renderer ??= GetComponent<SpriteRenderer>();
         _creator = GetComponentInParent<CaveCreator>();
-        _collider = GetComponentInParent<Collider2D>();
+        _myCollider = GetComponentInParent<Collider2D>();
+        _rockFallEvent = GetComponent<RockfallEvent>();
+
+        SetSprite(PieceType.Soil);
     }
 
     private void Update()
@@ -30,7 +35,9 @@ public class CavePiece : MonoBehaviour
             // Spriteを土に変更
             SetSprite(PieceType.Soil);
             // 衝突判定をつける
-            _collider.isTrigger = false;
+            _myCollider.enabled = true;
+            _myCollider.isTrigger = false;
+            _mineableCollider.enabled = true;
         }
     }
 
@@ -45,14 +52,21 @@ public class CavePiece : MonoBehaviour
         if (percentage > rand)
         {
             // 落石イベントを起こす
-            Debug.Log("！！！落石！！！");
+            _rockFallEvent.OnDig(false);
         }
     }
 
     public void BeMined()
     {
         SetSprite(PieceType.None);
-        _collider.isTrigger = true;
+        _myCollider.isTrigger = true;
+        _mineableCollider.enabled = false;
+    }
+
+    public void SetPillar()
+    {
+        SetSprite(PieceType.Pillar);
+        _myCollider.enabled = false;
     }
 }
 

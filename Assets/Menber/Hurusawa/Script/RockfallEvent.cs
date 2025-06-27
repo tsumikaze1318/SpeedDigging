@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class RockfallEvent : MonoBehaviour
 {
     public GameObject RockPrefab;
-    public Transform playerTransform;
 
     public int RockCount = 3;             // 生成する落石数（常に3個）
     public float SpawnRangeX = 3f;        // 横方向のばらつき範囲
@@ -19,40 +18,32 @@ public class RockfallEvent : MonoBehaviour
     {
         collapseRisk = 0;
         pillarProtectionCount = 0;
-
-        // 自動でプレイヤーを取得（オプション）
-        if (playerTransform == null)
-        {
-            GameObject player = GameObject.FindWithTag("Player");
-            if (player != null)
-            {
-                playerTransform = player.transform;
-            }
-        }
     }
 
     public void OnDig(bool isPillarPlaced)
     {
-        if (isGameOver) return;
+        SpawnFallingRock();
 
-        if (isPillarPlaced)
-        {
-            pillarProtectionCount = 3;
-        }
+        //if (isGameOver) return;
 
-        if (pillarProtectionCount > 0)
-        {
-            pillarProtectionCount--;
-        }
-        else
-        {
-            collapseRisk += 10;
-            collapseRisk = Mathf.Clamp(collapseRisk, 0, 1000);
-        }
+        //if (isPillarPlaced)
+        //{
+        //    pillarProtectionCount = 3;
+        //}
 
-        Debug.Log("現在の崩落危険度: " + collapseRisk + "%");
+        //if (pillarProtectionCount > 0)
+        //{
+        //    pillarProtectionCount--;
+        //}
+        //else
+        //{
+        //    collapseRisk += 10;
+        //    collapseRisk = Mathf.Clamp(collapseRisk, 0, 1000);
+        //}
 
-        CheckCollapse();
+        //Debug.Log("現在の崩落危険度: " + collapseRisk + "%");
+
+        //CheckCollapse();
     }
 
     void CheckCollapse()
@@ -73,17 +64,15 @@ public class RockfallEvent : MonoBehaviour
 
     void SpawnFallingRock()
     {
-        if (RockPrefab && playerTransform)
+        if (RockPrefab)
         {
             for (int i = 0; i < RockCount; i++)
             {
-                Vector3 spawnPos = playerTransform.position + Vector3.up * 5f;
+                Vector3 spawnPos = transform.position + Vector3.up * 5f;
                 spawnPos.x += Random.Range(-SpawnRangeX, SpawnRangeX); 
 
                 Instantiate(RockPrefab, spawnPos, Quaternion.identity);
             }
-
-            Debug.Log($"プレイヤーの頭上に {RockCount} 個の落石を生成");
         }
     }
 
@@ -92,8 +81,7 @@ public class RockfallEvent : MonoBehaviour
         if (!isGameOver)
         {
             isGameOver = true;
-            Debug.Log("ゲームオーバー！");
-            SceneManager.LoadScene("Test Scene2");
+            
         }
     }
 }
