@@ -6,7 +6,10 @@ public class CaveCreator : MonoBehaviour
 {
     [SerializeField]
     private CavePiece _cavePiece;
-    private Queue<CavePiece> _cavesQueue = new Queue<CavePiece>();
+    private List<CavePiece> _caveList = new List<CavePiece>();
+    [SerializeField]
+    private Transform _targetTransform;
+    public Transform TargetTransform => _targetTransform;
 
     private async void Start()
     {
@@ -23,9 +26,16 @@ public class CaveCreator : MonoBehaviour
         int i = 0;
         foreach (CavePiece cavePiece in handler.Result)
         {
-            _cavesQueue.Enqueue(cavePiece);
+            _caveList.Add(cavePiece);
             cavePiece.transform.position = new Vector3(i * 5, 0, 0);
             i++;
         }
+    }
+
+    public void ReplacePiece(CavePiece cavePiece)
+    {
+        _caveList.Remove(cavePiece);
+        cavePiece.transform.position = _caveList[^1].transform.position + Vector3.right * 5;
+        _caveList.Add(cavePiece);
     }
 }

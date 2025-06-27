@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8868267231354634436}
   - component: {fileID: 7942416162114691040}
   - component: {fileID: 6413277433432098140}
-  m_Layer: 0
+  - component: {fileID: 4848045728438381541}
+  m_Layer: 6
   m_Name: CavePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,3 +131,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4848045728438381541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2583931474650019683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1986a055d4bdfb849b69a00331f9672c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sprites:
+  - {fileID: 0}
+  - {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  - {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}

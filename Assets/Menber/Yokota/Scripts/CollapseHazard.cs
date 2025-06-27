@@ -1,4 +1,4 @@
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 namespace CollapseHazard
@@ -13,6 +13,17 @@ namespace CollapseHazard
         {
             CollapseHazardModel model = new CollapseHazardModel();
             _presenter = new CollapseHazardPresenter(model, _view);
+        }
+
+        public CollapseHazardPresenter GetPresenter() { return _presenter; }
+        public void ResetPercentage()
+        {
+            _presenter.ResetPercentage();
+        }
+
+        public void UpdatePercentage()
+        {
+            _presenter.UpdatePercentage();
         }
     }
 }
