@@ -861,7 +861,7 @@ public partial class @SpeedDigging: IInputActionCollection2, IDisposable
             ""id"": ""6d721a38-71ce-4c03-8060-6cc1f2da5d6a"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""AnyButton"",
                     ""type"": ""Button"",
                     ""id"": ""d62873bd-2eb7-4dcd-b0d6-4e9778bfa188"",
                     ""expectedControlType"": """",
@@ -878,7 +878,18 @@ public partial class @SpeedDigging: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c170b2e-eb29-41c4-9d3a-0222b15a1e8a"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -969,7 +980,7 @@ public partial class @SpeedDigging: IInputActionCollection2, IDisposable
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
         // Title
         m_Title = asset.FindActionMap("Title", throwIfNotFound: true);
-        m_Title_Newaction = m_Title.FindAction("New action", throwIfNotFound: true);
+        m_Title_AnyButton = m_Title.FindAction("AnyButton", throwIfNotFound: true);
     }
 
     ~@SpeedDigging()
@@ -1234,12 +1245,12 @@ public partial class @SpeedDigging: IInputActionCollection2, IDisposable
     // Title
     private readonly InputActionMap m_Title;
     private List<ITitleActions> m_TitleActionsCallbackInterfaces = new List<ITitleActions>();
-    private readonly InputAction m_Title_Newaction;
+    private readonly InputAction m_Title_AnyButton;
     public struct TitleActions
     {
         private @SpeedDigging m_Wrapper;
         public TitleActions(@SpeedDigging wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_Title_Newaction;
+        public InputAction @AnyButton => m_Wrapper.m_Title_AnyButton;
         public InputActionMap Get() { return m_Wrapper.m_Title; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1249,16 +1260,16 @@ public partial class @SpeedDigging: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_TitleActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_TitleActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @AnyButton.started += instance.OnAnyButton;
+            @AnyButton.performed += instance.OnAnyButton;
+            @AnyButton.canceled += instance.OnAnyButton;
         }
 
         private void UnregisterCallbacks(ITitleActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @AnyButton.started -= instance.OnAnyButton;
+            @AnyButton.performed -= instance.OnAnyButton;
+            @AnyButton.canceled -= instance.OnAnyButton;
         }
 
         public void RemoveCallbacks(ITitleActions instance)
@@ -1344,6 +1355,6 @@ public partial class @SpeedDigging: IInputActionCollection2, IDisposable
     }
     public interface ITitleActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnAnyButton(InputAction.CallbackContext context);
     }
 }
