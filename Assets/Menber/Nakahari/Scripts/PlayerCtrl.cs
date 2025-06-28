@@ -39,6 +39,7 @@ public class PlayerCtrl : MonoBehaviour
         if (_holding)
         {
             _holdTime += Time.deltaTime;
+            _changer.FillPillarUi((COMPLETE_PILLAR_TIME -  _holdTime) / 2);
         }
 
         if (_holdTime > COMPLETE_PILLAR_TIME)
@@ -50,6 +51,7 @@ public class PlayerCtrl : MonoBehaviour
                 {
                     CavePiece piece = collider.GetComponent<CavePiece>();
                     piece.SetPillar();
+                    _collapseHazardController.SetPillarEffect();
                     _changer.ActivatePillarUi(false);
                 }
             }
@@ -86,6 +88,7 @@ public class PlayerCtrl : MonoBehaviour
         else
         {
             _holding = false;
+            _changer.FillPillarUi(1f);
             _holdTime = 0;
         }
     }
@@ -124,7 +127,7 @@ public class PlayerCtrl : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Rock"))
         {
-            GameManager.Instance._score = _score.Score_m;
+            GameManager.Instance.Score = _score.ScoreValue;
             GameManager.Instance.ChangeScene(SceneType.Result);
         }
     }

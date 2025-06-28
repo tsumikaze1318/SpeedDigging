@@ -7,8 +7,9 @@ using TMPro;
 public class TimeUI : MonoBehaviour
 {
     [SerializeField]
-
     TextMeshProUGUI TimerText;
+    [SerializeField]
+    private Score _score;
 
     float limitTime = 60;
 
@@ -29,6 +30,8 @@ public class TimeUI : MonoBehaviour
         if (limitTime < 0 )
         {
             limitTime = 0;
+            GameManager.Instance.Score = _score.ScoreValue;
+            GameManager.Instance.ChangeScene(SceneType.Result);
         }
 
         TimerText.text = limitTime.ToString("F0");

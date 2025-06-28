@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     private bool _isGame = false;
     public bool IsGame => _isGame;
 
-    public int _score = 0;
+    public int Score = 0;
 
     private void Start()
     {
@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
         {
             case SceneType.Title: 
                 _titleScene.gameObject.SetActive(true);
-                _gameScene.SetActive(false);
+                _gameScene.SetActive(_isGame);
                 _playerCtrl.ActivateInput(false);
                 break;
             case SceneType.Game:
@@ -65,14 +65,16 @@ public class GameManager : MonoBehaviour
                 _gameStartCountDown.gameObject.SetActive(true);
                 await _gameStartCountDown.CountDownAsync();
                 _titleScene.StopBackGroundAnimation();
-                _gameScene.SetActive(true);
+                _isGame = true;
+                _gameScene.SetActive(_isGame);
                 _playerCtrl.ActivateInput(true);
                 break;
             case SceneType.Result:
                 _isGame = false;
                 _resultScene.gameObject.SetActive(true);
+                _gameScene.SetActive(_isGame);
                 _playerCtrl.ActivateInput(false);
-                _resultScene.SetScore(_score);
+                _resultScene.SetScore(Score);
                 break;
         }
     }

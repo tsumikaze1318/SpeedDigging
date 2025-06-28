@@ -23,7 +23,16 @@ public class UIChanger : MonoBehaviour
 
     public void ActivatePillarUi(bool active)
     {
-        if (active) { _pillarUi.color = _activeColor; }
+        if (active) 
+        {
+            _pillarUi.color = _activeColor;
+            _pillarUi.fillAmount = 1f;
+        }
         else { _pillarUi.color = _inactiveColor; }
+    }
+
+    public void FillPillarUi(float f)
+    {
+        _pillarUi.fillAmount = f;
     }
 }

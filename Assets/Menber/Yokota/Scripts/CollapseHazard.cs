@@ -25,6 +25,11 @@ namespace CollapseHazard
         {
             _presenter.UpdatePercentage();
         }
+
+        public void SetPillarEffect()
+        {
+            _presenter.SetPillarEffect();
+        }
     }
 }
 
@@ -36,6 +41,9 @@ namespace CollapseHazard
         private ReactiveProperty<float> _currentPercentageProperty = new ReactiveProperty<float>();
         public ReactiveProperty<float> CurrentPercentageProperty => _currentPercentageProperty;
 
+        private ReactiveProperty<int> _pillarEffectNum = new ReactiveProperty<int>();
+        public ReactiveProperty<int> PillarEffectNum => _pillarEffectNum;
+
         public void ResetPercentage()
         {
             _currentPercentageProperty.Value = 0;
@@ -43,7 +51,19 @@ namespace CollapseHazard
 
         public void UpdatePercentage()
         {
+            if (_pillarEffectNum.Value > 0) 
+            {
+                _pillarEffectNum.Value--;
+                return;
+            }
+            if (_currentPercentageProperty.Value >= 100) { return; }
             _currentPercentageProperty.Value += PERCENTAGE_INCREASE;
+        }
+
+        public void SetPillarNum()
+        {
+            _pillarEffectNum.Value = 3;
+            _currentPercentageProperty.Value = 0;
         }
     }
 }
@@ -62,6 +82,7 @@ namespace CollapseHazard
             _view = view;
 
             _model.CurrentPercentageProperty.Subscribe(x => { _view.UpdatePercentageText(x); });
+            _model.PillarEffectNum.Subscribe(x => { _view.DisplayPillarIcon(x > 0); });
             _model.ResetPercentage();
         }
 
@@ -73,6 +94,11 @@ namespace CollapseHazard
         public void ResetPercentage()
         {
             _model.ResetPercentage();
+        }
+
+        public void SetPillarEffect()
+        {
+            _model.SetPillarNum();
         }
     }
 }
